@@ -20,7 +20,7 @@ public class Cliente extends JFrame {
     private JButton registrarButton;
     private JTextPane textPane1;
 
-    private void limpiar (){
+    private void limpiar() {
 
         textField1.setText("");
         textField2.setText("");
@@ -29,13 +29,13 @@ public class Cliente extends JFrame {
 
     }
 
-    public Cliente(){
+    public Cliente() {
 
         this.setContentPane(this.main);
         this.setTitle("Registros  a BD");
         this.setDefaultCloseOperation(3);
         this.setSize(500, 300);
-        this.setLocationRelativeTo((Component)null);
+        this.setLocationRelativeTo((Component) null);
         this.setVisible(true);
 
 
@@ -44,12 +44,12 @@ public class Cliente extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
 
-                if (textField1.getText().equals("") || textField2.getText().equals("") || textField3.getText().equals("") || textField4.getText().equals("")){
+                if (textField1.getText().equals("") || textField2.getText().equals("") || textField3.getText().equals("") || textField4.getText().equals("")) {
 
-                    JOptionPane.showMessageDialog(null,"Porfavor ingrese todos los datos");
-                }else {
+                    JOptionPane.showMessageDialog(null, "Porfavor ingrese todos los datos");
+                } else {
                     Gimnasio persona = new Gimnasio();
-                    DAOGimnasioImplementacion cliente =new DAOGimnasioImplementacion();
+                    DAOGimnasioImplementacion cliente = new DAOGimnasioImplementacion();
 
                     persona.setNombre(textField1.getText());
                     persona.setDni(textField2.getText());
@@ -63,18 +63,16 @@ public class Cliente extends JFrame {
                 }
 
 
-
-
             }
         });
         modificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (textField1.getText().equals("") || textField2.getText().equals("") || textField3.getText().equals("") || textField4.getText().equals("")){
+                if (textField1.getText().equals("") || textField2.getText().equals("") || textField3.getText().equals("") || textField4.getText().equals("")) {
 
-                    JOptionPane.showMessageDialog(null,"Porfabor ingrese todos los datos para poder modificar");
-                }else {
+                    JOptionPane.showMessageDialog(null, "Porfabor ingrese todos los datos para poder modificar");
+                } else {
                     Gimnasio persona = new Gimnasio();
                     DAOGimnasioImplementacion cliente = new DAOGimnasioImplementacion();
 
@@ -87,9 +85,8 @@ public class Cliente extends JFrame {
 
                     limpiar();
 
-                    JOptionPane.showMessageDialog(null,"Modificacion exitosa");
+                    JOptionPane.showMessageDialog(null, "Modificacion exitosa");
                 }
-
 
 
             }
@@ -97,9 +94,9 @@ public class Cliente extends JFrame {
         eliminarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(textField2.getText().equals("")){
-                    JOptionPane.showMessageDialog(null,"Porfavor ingrese el dni");
-                }else {
+                if (textField2.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Porfavor ingrese el dni");
+                } else {
                     Gimnasio persona = new Gimnasio();
                     DAOGimnasioImplementacion cliente = new DAOGimnasioImplementacion();
 
@@ -109,6 +106,38 @@ public class Cliente extends JFrame {
 
                     JOptionPane.showMessageDialog(null, "se elimino con exito");
                 }
+            }
+        });
+        buscarButton.addActionListener(new ActionListener() {
+
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Gimnasio persona = new Gimnasio();
+                DAOGimnasioImplementacion consulta = new DAOGimnasioImplementacion();
+                if (textField2.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Por favor ingrese el dni");
+                } else if (textField1.getText().isEmpty() || textField2.getText().isEmpty() || textField3.getText().isEmpty() || textField4.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No hay dato");
+                } else if (persona.getNombre() == null && persona.getDni() == null &&
+                        persona.getDireccion() == null && persona.getCelular() == null) {
+                    JOptionPane.showMessageDialog(null, "No hay datos registrados");
+                } else {
+
+
+                    persona.setDni(textField2.getText());
+                    consulta.buscar(persona);
+
+                    textPane1.setText("Nombre: " + persona.getNombre() + "\n");
+                    textPane1.setText(textPane1.getText() + "DNI: " + persona.getDni() + "\n");
+                    textPane1.setText(textPane1.getText() + "Dirección: " + persona.getDireccion() + "\n");
+                    textPane1.setText(textPane1.getText() + "Celular: " + persona.getCelular() + "\n");
+
+                    limpiar();
+
+                }
+
+
             }
         });
     }
